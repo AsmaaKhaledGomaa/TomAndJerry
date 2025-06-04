@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -42,6 +43,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -50,6 +52,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -146,10 +149,6 @@ private fun KitchenContent() {
     }
 }
 
-@Composable
-private fun PastaEllipseWithLabels() {
-
-}
 
 @Composable
 private fun LabelsOverlay() {
@@ -159,7 +158,7 @@ private fun LabelsOverlay() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(.9f)
                 .wrapContentHeight()
                 .padding(start = 16.dp, top = 46.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
@@ -172,41 +171,55 @@ private fun LabelsOverlay() {
             IconLabelRow(
                 iconRes = R.drawable.chef_ic,
                 text = "Shocking foods",
-                iconSize = 29.dp
+                iconSize = 28.dp
             )
         }
     }
 }
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 private fun IconLabelRow(
     @DrawableRes iconRes: Int,
     text: String,
     iconSize: Dp
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Image(
-            painter = painterResource(iconRes),
-            contentDescription = text,
-            modifier = Modifier.size(iconSize)
-        )
-        Text(
-            text = text,
-            style = TextStyle(
-                fontSize = 20.sp,
-                lineHeight = 24.sp,
-                fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_medium)),
-                fontWeight = FontWeight.Medium,
-                color = TextWhiteColor.copy(alpha = 0.87f),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.5.sp
-            ),
-            modifier = Modifier.padding(start = 8.dp)
-        )
+    BoxWithConstraints {
+        val screenWidthDp = LocalConfiguration.current.screenWidthDp
+        val fontSize = when {
+            screenWidthDp < 300 -> 13.sp
+            screenWidthDp < 360 -> 15.sp
+            screenWidthDp < 400 -> 17.sp
+            screenWidthDp < 480 -> 20.sp
+            else -> 22.sp
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Image(
+                painter = painterResource(iconRes),
+                contentDescription = text,
+                modifier = Modifier.size(iconSize)
+            )
+            Text(
+                text = text,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                style = TextStyle(
+                    fontSize = fontSize,
+                    lineHeight = fontSize * 1.2,
+                    fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_medium)),
+                    fontWeight = FontWeight.Medium,
+                    color = TextWhiteColor.copy(alpha = 0.87f),
+                    textAlign = TextAlign.Start,
+                    letterSpacing = 0.5.sp
+                ),
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
     }
 }
 
@@ -219,29 +232,59 @@ private fun CardRoundedContainer() {
 
 @Composable
 private fun PastaImageOverlay() {
+    val screenWidthDp = LocalConfiguration.current.screenWidthDp
+
+    val (imageWidth, imageHeight) = when {
+        screenWidthDp < 300 -> 170.dp to 140.dp
+        screenWidthDp < 360 -> 190.dp to 160.dp
+        screenWidthDp < 400 -> 210.dp to 200.dp
+        screenWidthDp < 480 -> 250.dp to 217.dp
+        else -> 260.dp to 226.dp
+    }
+
+    // Responsive offset values
+    val (offsetX, offsetY) = when {
+        screenWidthDp < 300 -> (-19).dp to 28.dp
+        screenWidthDp < 360 -> (-20).dp to 26.dp
+        screenWidthDp < 400 -> (-21).dp to 26.dp
+        screenWidthDp < 480 -> (-22).dp to 18.dp
+        else -> (-23).dp to 16.dp
+    }
+
     Box(
         Modifier
             .fillMaxSize()
-            .offset(x = (-23).dp, y = 18.dp),
+            .offset(x = offsetX, y = offsetY),
         contentAlignment = Alignment.BottomEnd
     ) {
         Image(
             painter = painterResource(R.drawable.pasta),
             contentDescription = "Pasta Plate",
             modifier = Modifier
-                .width(250.dp)
-                .height(217.dp)
+                .width(imageWidth)
+                .height(imageHeight)
         )
     }
 }
 
 @Composable
 private fun CardTitle() {
+    val screenWidthDp = LocalConfiguration.current.screenWidthDp
+    val fontSize = when {
+        screenWidthDp < 300 -> 16.sp
+        screenWidthDp < 360 -> 18.sp
+        screenWidthDp < 400 -> 20.sp
+        screenWidthDp < 480 -> 22.sp
+        else -> 24.sp
+    }
+
+    val lineHeight = fontSize * 1.35
+
     Text(
         text = "Electric Tom pasta",
         style = TextStyle(
-            fontSize = 24.sp,
-            lineHeight = 33.sp,
+            fontSize = fontSize,
+            lineHeight = lineHeight,
             letterSpacing = 0.5.sp,
             fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_medium)),
             fontWeight = FontWeight.Medium,
@@ -303,26 +346,52 @@ private fun CardPriceAndFavorite() {
 
 @Composable
 private fun CardDescription() {
+    val screenWidthDp = LocalConfiguration.current.screenWidthDp
+
+    val fontSize = when {
+        screenWidthDp < 300 -> 11.sp
+        screenWidthDp < 360 -> 13.sp
+        screenWidthDp < 400 -> 15.sp
+        screenWidthDp < 480 -> 17.sp
+        else -> 17.sp
+    }
+
+    val lineHeight = fontSize * 1.15
+
     Text(
         text = "Pasta cooked with a charger cable and sprinkled with questionable cheese. Make sure to unplug it before eating (or not, you decide).",
         style = TextStyle(
-            fontSize = 17.sp,
-            lineHeight = 19.sp,
+            fontSize = fontSize,
+            lineHeight = lineHeight,
             fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_medium)),
             fontWeight = FontWeight.Medium,
             color = TextDarkGreyColor.copy(alpha = 0.6f),
             letterSpacing = 0.7.sp
-        )
+        ),
+        maxLines = 3,
+        overflow = TextOverflow.Ellipsis,
     )
 }
 
 @Composable
 private fun CardSectionTitle(title: String) {
+    val screenWidthDp = LocalConfiguration.current.screenWidthDp
+
+    val fontSize = when {
+        screenWidthDp < 300 -> 14.sp
+        screenWidthDp < 360 -> 16.sp
+        screenWidthDp < 400 -> 18.sp
+        screenWidthDp < 480 -> 20.sp
+        else -> 22.sp
+    }
+
+    val lineHeight = fontSize * 1.5
+
     Text(
         text = title,
         style = TextStyle(
-            fontSize = 22.sp,
-            lineHeight = 33.sp,
+            fontSize = fontSize,
+            lineHeight = lineHeight,
             fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_medium)),
             fontWeight = FontWeight.Medium,
             color = TextPrimaryColor.copy(alpha = 0.87f),
@@ -331,6 +400,7 @@ private fun CardSectionTitle(title: String) {
         )
     )
 }
+
 
 @Composable
 fun DetailsCard(
