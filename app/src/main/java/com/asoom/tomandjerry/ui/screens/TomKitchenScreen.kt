@@ -578,7 +578,7 @@ fun BottomBar() {
             .fillMaxWidth()
             .height(102.dp)
             .background(WhiteColor)
-            .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 6.dp)
+            .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 16.dp)
     ) {
         Button(
             onClick = {},
