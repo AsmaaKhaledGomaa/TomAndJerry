@@ -63,9 +63,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.asoom.tomandjerry.R
 import com.asoom.tomandjerry.ui.theme.BackgroundColor
-import com.asoom.tomandjerry.ui.theme.BackgroundWhite
-import com.asoom.tomandjerry.ui.theme.BorderGrey
-import com.asoom.tomandjerry.ui.theme.LightBlue
+import com.asoom.tomandjerry.ui.theme.BackgroundWhiteColor
+import com.asoom.tomandjerry.ui.theme.BorderGreyColor
+import com.asoom.tomandjerry.ui.theme.LightBlueColor
 import com.asoom.tomandjerry.ui.theme.MedGreyColor
 import com.asoom.tomandjerry.ui.theme.PrimaryColor
 import com.asoom.tomandjerry.ui.theme.TextAccentColor
@@ -73,7 +73,7 @@ import com.asoom.tomandjerry.ui.theme.TextDarkGreyColor
 import com.asoom.tomandjerry.ui.theme.TextPrimaryColor
 import com.asoom.tomandjerry.ui.theme.TextSecondaryColor
 import com.asoom.tomandjerry.ui.theme.TextWhiteColor
-import com.asoom.tomandjerry.ui.theme.White
+import com.asoom.tomandjerry.ui.theme.WhiteColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -97,7 +97,7 @@ fun TomStoreScreen() {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = BackgroundWhite)
+                .background(color = BackgroundWhiteColor)
                 .padding(horizontal = 16.dp),
             contentPadding = WindowInsets.statusBars.asPaddingValues(),
         ) {
@@ -165,7 +165,7 @@ fun ProfileSection(modifier: Modifier = Modifier) {
         )
         Text(
             text = "Which Tom do you want to buy?",
-            fontSize = 14.sp, // كبرنا الخط
+            fontSize = 14.sp,
             color = TextSecondaryColor,
             fontFamily = FontFamily(Font(R.font.ipm_plex_sans_arabic_regular, FontWeight.Normal)),
             maxLines = 1,
@@ -193,7 +193,7 @@ fun NotificationIconWithBadge(badgeCount: Int) {
                 ) {
                     Text(
                         text = "3",
-                        color = White,
+                        color = WhiteColor,
                         fontSize = 12.sp,
                         fontFamily = FontFamily(
                             Font(
@@ -214,7 +214,7 @@ fun NotificationIconWithBadge(badgeCount: Int) {
                 .fillMaxSize()
                 .border(
                     width = 1.dp,
-                    color = BorderGrey.copy(alpha = 0.15f),
+                    color = BorderGreyColor.copy(alpha = 0.15f),
                     shape = RoundedCornerShape(12.dp)
                 )
         ) {
@@ -235,7 +235,7 @@ fun SearchBarSection() {
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
-            .background(BackgroundWhite),
+            .background(BackgroundWhiteColor),
     ) {
         Box(
             modifier = Modifier
@@ -269,7 +269,7 @@ fun SearchBarView() {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = White,
+                color = WhiteColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .border(
@@ -403,7 +403,7 @@ fun TomBanner() {
             ) {
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     drawOval(
-                        color = White.copy(alpha = 0.08f),
+                        color = WhiteColor.copy(alpha = 0.08f),
                         topLeft = Offset.Zero,
                         size = size
                     )
@@ -426,15 +426,13 @@ fun TomBanner() {
             ) {
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     drawOval(
-                        color = White.copy(alpha = 0.08f),
+                        color = WhiteColor.copy(alpha = 0.08f),
                         topLeft = Offset.Zero,
                         size = size
                     )
                 }
             }
         }
-
-
         Image(
             painter = painterResource(id = R.drawable.tom_banner),
             contentDescription = "Tom Banner",
@@ -586,7 +584,7 @@ fun TomSectionColumn() {
                                 .weight(1f)
                                 .height(38.dp)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(color = LightBlue)
+                                .background(color = LightBlueColor)
                                 .padding(vertical = 9.dp, horizontal = 2.dp),
                             horizontalArrangement = Arrangement.Center
                         ) {
