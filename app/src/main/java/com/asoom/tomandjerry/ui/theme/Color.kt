@@ -24,7 +24,12 @@ val LightBabyBlueColor = Color(0xFFD0E5F0)
 val BlueColor = Color(0xFF226992)
 val LightGrayBorderColor = Color(0x1F1F1F1E)
 val DotWhiteTranslucentColor = Color(0x61FFFFFF)
+val BackgroundGreenColor = Color(0xFFDEEECD)
+val BackgroundBinkColor = Color(0xFFF2D9E7)
+val BackgroundYellowColor = Color(0xFFFAEDCF)
+val BorderGrayColor = Color(0x14001A1F)
 
+// Text
 val TextDarkGreyColor = Color(0xFF121212)
 val TextPrimaryColor = Color(0xFF1F1F1E)
 val TextSecondaryColor = Color(0xFFA5A6A4)
