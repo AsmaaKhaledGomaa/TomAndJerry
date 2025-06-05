@@ -397,8 +397,6 @@ fun TomBanner() {
                         rotationZ = 110f
                     }
                     .offset(x = 12.dp, y = (-37).dp)
-
-
                     .zIndex(2f)
             ) {
                 Canvas(modifier = Modifier.fillMaxSize()) {
